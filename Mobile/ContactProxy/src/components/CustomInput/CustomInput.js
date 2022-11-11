@@ -1,15 +1,15 @@
 import { View, Text, TextInput, StyleSheet } from 'react-native'
 import React from 'react'
 
-const CustomInput = ({value, setValue, placeholder, secureTextEntry}) => {
+const CustomInput = ({value, setValue, placeholder, secureTextEntry,  type = 'SIGNIN'}) => {
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, styles[`container_${type}`]]}>
         <TextInput 
             value={value}
-            onChangeText= {setValue}
-            placeholder= {placeholder} 
+            onChangeText={setValue}
+            placeholder={placeholder} 
+            secureTextEntry={secureTextEntry}
             style={styles.input}
-            secureTextEntry = {secureTextEntry}
         />
     </View>
   );
@@ -20,18 +20,25 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         width: '72%',
 
-        borderColor: '#e8e8e8',
-        borderWidth: 1,
+        borderColor: '#000',
+        borderWidth: 2,
         borderRadius: 5,
         
-        marginVertical: 5   ,
+        marginVertical: 5,
         paddingHorizontal: 10,
-        top: '60%',
-        //marginVertical: 5,
     },
+
+    container_SIGNIN:{
+        top: '60%',
+    },
+
+    container_SIGNUP:{
+        top: '20%',
+    },
+    
     input: {
         fontFamily: 'SF-Pro-Display-Light',
-        fontSize: 17,
+        fontSize: 20,
     },
 })
 

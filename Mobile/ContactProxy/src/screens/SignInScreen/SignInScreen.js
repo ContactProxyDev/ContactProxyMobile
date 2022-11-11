@@ -28,7 +28,7 @@ const SignInScreen = () => {
             </Text>
             
             <CustomInput 
-                placeholder="Логин" 
+                placeholder="Почта" 
                 value={username} 
                 setValue={setUsername} 
                 secureTextEntry = {false}
@@ -47,13 +47,13 @@ const SignInScreen = () => {
             <CustomButton
                 text = "Забыли пароль?"
                 onPress={OnForgotPasswordPressed}
-                type = "TERTIARY"
+                type = "TERTIARY_SIGNIN"
             />
 
             <CustomButton
                 text = "Еще не зарегистрированы?"
                 onPress={OnRegButtonPressed}
-                type = "TERTIARY"
+                type = "TERTIARY_SIGNIN"
             />
         </View>
     )
@@ -73,7 +73,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         paddingTop: '10%',
         
-    }
+    },
+    
 })
 
 export default SignInScreen
