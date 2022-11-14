@@ -1,98 +1,129 @@
-import React, {useState} from "react";
-import { View, Text, StyleSheet, ScrollView} from "react-native";
+import { View, Text, StyleSheet, ScrollView } from "react-native";
 import CustomInput from "../../components/CustomInput";
 import CustomButton from "../../components/CustomButton";
+import { useNavigation } from "@react-navigation/native";
+import { useForm, Controller } from "react-hook-form";
 
+const EMAIL_REGEX = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 
 const SignUpScreen = () => {
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
-    
-    const onSignInPressed = () => {
-        console.warn("Sign in"); 
+    const {
+        control, 
+        handleSubmit,  
+        formState: {errors},
+        watch
+    } = useForm();
+
+    const pwd = watch('password');
+
+    const navigation = useNavigation();
+
+    const onSignUpPressed = (data) => {
+        console.warn('sign up');
     }
 
-    const OnForgotPasswordPressed = () => {
-        console.warn("password is forgotten");
-    }
-
-    const OnRegButtonPressed = () => {
-        console.warn("reg");
+    const OnAuthButtonPressed = () => {
+        navigation.navigate('SignIn');
     }
 
 
     return (
-        <View style={styles.SignInScreen}>
+        <View style={styles.container}>
             <Text style={styles.logo}>
                 Регистрация
             </Text>
             
             <CustomInput 
-                placeholder = "Имя" 
-                value = {username} 
-                setValue = {setUsername} 
+                name = 'name'
+                placeholder = 'Имя'
+                control = {control} 
                 secureTextEntry = {false}
                 type = 'SIGNUP'
+                rules = {{
+                    required: 'Это обязательное поле', 
+                }}
             />
+
             <CustomInput 
-                placeholder = "Фамилия" 
-                value = {password} 
-                setValue = {setPassword} 
+                name = 'sername'
+                placeholder = 'Фамилия'
+                control = {control}
                 secureTextEntry = {false}
                 type = 'SIGNUP'
+                rules = {{
+                    required: 'Это обязательное поле', 
+                }}
             />
+
             <CustomInput 
-                placeholder = "Почта" 
-                value = {password} 
-                setValue = {setPassword} 
+                name = 'email'
+                placeholder = 'Почта'
+                control = {control}
                 secureTextEntry = {false}
                 type = 'SIGNUP'
+                rules = {{
+                    required: 'Это обязательное поле', 
+                    pattern: {value: EMAIL_REGEX, message: 'Некорректный адрес почты'}
+                }}
             />
+
             <CustomInput 
-                placeholder = "Пароль" 
-                value = {password} 
-                setValue = {setPassword} 
+                name = 'password'
+                placeholder = 'Пароль'
+                control = {control}
                 secureTextEntry = {true}
                 type = 'SIGNUP'
+                rules = {{
+                    required: 'Это обязательное поле', 
+                    minLength: {
+                        value: 3, 
+                        message: 'Пароль должен быть длиной не меньше 3 символов'
+                    },
+                    maxLength: {
+                        value: 24,
+                        message: 'Пароль должен быть длинной не больше 24 символов'
+                    }
+                }}
             />
+
             <CustomInput 
-                placeholder = "Повторите пароль" 
-                value = {password} 
-                setValue = {setPassword} 
+                name = 'confirmPassword'
+                placeholder = 'Повторите пароль'
+                control = {control}
                 secureTextEntry = {true}
                 type = 'SIGNUP'
+                rules = {{
+                    required: 'Это обязательное поле', 
+                    validate: value => value === pwd || 'Пароли не совпадают'
+                }}
             />
 
             <CustomButton
-                text = "Зарегистрироваться"
-                onPress = {onSignInPressed}
-                type = "PRIMARY_SIGNUP"
+                text = 'Зарегистрироваться'
+                onPress = {handleSubmit(onSignUpPressed)}
+                type = 'PRIMARY_SIGNUP'
             />
 
             <CustomButton
-                text = "Уже есть аккаунт? Войти"
-                onPress = {onSignInPressed}
-                type = "TERTIARY_SIGNUP"
+                text = 'Уже есть аккаунт? Войти'
+                onPress = {OnAuthButtonPressed}
+                type = 'TERTIARY_SIGNUP'
             />
-
         </View>
     )
 }
 
 const styles = StyleSheet.create({
     logo: {
-        fontFamily: "SF-Pro-Display-Light",
+        fontFamily: 'SF-Pro-Display-Light',
         fontSize: 35,
         color: '#000'
-        //paddingRight: '10%',
-        //paddingLeft: '10%',
         
     },
-    SignInScreen: {
-        top: 30,
+    container: {
+        flex: 1,
+        top: '12%',
         alignItems: 'center',
-        paddingTop: '10%',
-        
     }
 })
 

@@ -1,59 +1,76 @@
 import React, {useState} from "react";
-import { View, Text, StyleSheet, ScrollView} from "react-native";
+import { View, Text, StyleSheet, ScrollView, TextInput, SafeAreaView} from "react-native";
 import CustomInput from "../../components/CustomInput";
 import CustomButton from "../../components/CustomButton";
+import { useNavigation } from "@react-navigation/native";
+import { useForm, Controller } from "react-hook-form";
 
 
 const SignInScreen = () => {
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
-    
-    const onSignInPressed = () => {
-        console.warn("Sign in"); 
+    const navigation = useNavigation(); 
+
+    const {
+        control, 
+        handleSubmit,  
+        formState: {errors}
+    } = useForm();
+
+    const onSignInPressed = (data) => {
+        console.log(data);
+        console.warn('Sign in'); 
     }
 
     const OnForgotPasswordPressed = () => {
-        console.warn("password is forgotten");
+        
+        navigation.navigate('ConfirmResetPassword');
     }
 
     const OnRegButtonPressed = () => {
-        console.warn("reg");
+
+        navigation.navigate('SignUp');
     }
 
 
     return (
-        <View style={styles.SignInScreen}>
+        
+        <View style={styles.container}>
+            
             <Text style={styles.logo}>
                 Contact Proxy
             </Text>
             
-            <CustomInput 
-                placeholder="Почта" 
-                value={username} 
-                setValue={setUsername} 
+            <CustomInput
+                name = 'email'
+                placeholder = 'Почта'
+                control = {control} 
                 secureTextEntry = {false}
+                rules = {{required: 'Это обязательное поле',}}
             />
             <CustomInput 
-                placeholder="Пароль" 
-                value={password} 
-                setValue={setPassword} 
+                name = 'password'
+                placeholder = 'Пароль'
+                control = {control} 
                 secureTextEntry = {true}
-            />
-            <CustomButton
-                text = "Авторизироваться"
-                onPress={onSignInPressed}
+                rules = {{
+                    required: 'Это обязательное поле', 
+                }}
             />
 
             <CustomButton
-                text = "Забыли пароль?"
+                text = 'Авторизироваться'
+                onPress={handleSubmit(onSignInPressed)}
+            />
+
+            <CustomButton
+                text = 'Забыли пароль?'
                 onPress={OnForgotPasswordPressed}
-                type = "TERTIARY_SIGNIN"
+                type = 'TERTIARY_SIGNIN'
             />
 
             <CustomButton
-                text = "Еще не зарегистрированы?"
+                text = 'Еще не зарегистрированы?'
                 onPress={OnRegButtonPressed}
-                type = "TERTIARY_SIGNIN"
+                type = 'TERTIARY_SIGNIN'
             />
         </View>
     )
@@ -61,17 +78,17 @@ const SignInScreen = () => {
 
 const styles = StyleSheet.create({
     logo: {
-        fontFamily: "Equinox-Bold",
+        fontFamily: 'Equinox-Bold',
         fontSize: 35,
         color: '#000'
         //paddingRight: '10%',
         //paddingLeft: '10%',
         
     },
-    SignInScreen: {
-        top: 100,
+    container: {
+        flex: 1,
+        top: '12%',
         alignItems: 'center',
-        paddingTop: '10%',
         
     },
     

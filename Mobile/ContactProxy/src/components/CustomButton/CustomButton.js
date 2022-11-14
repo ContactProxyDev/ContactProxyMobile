@@ -20,27 +20,39 @@ const styles = StyleSheet.create({
     },
 
     container_PRIMARY_SIGNIN: {
-        top: '60%',
+        top: '20%',
         backgroundColor: '#222226',
     },
 
     container_TERTIARY_SIGNIN: {
-        top: '78%',
+        top: '40%',
         marginVertical: 0,
         width: '100%',
     },
 
     container_PRIMARY_SIGNUP: {
-      top: '20%',
+      top: '12%',
       backgroundColor: '#222226',
     },
 
     container_TERTIARY_SIGNUP: {
-      top: '38%',
+      top: '13%',
       marginVertical: 0,
       width: '100%',
     },
     
+    container_SECONDARY: {
+      top: '20%',
+      marginVertical: 5,
+      padding: 5,
+      borderColor: '#000',
+      borderWidth: 2,
+    },
+
+    text_SECONDARY: {
+      color: '#000'
+    },
+
     text: {
         fontFamily: 'SF-Pro-Display-Light',
         fontSize: 23,
